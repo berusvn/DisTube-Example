@@ -39,7 +39,7 @@ module.exports = async (client, message) => {
         return message.channel.send(embed);
     }
 
-    if (command.owner && message.author.id !== "527452562857656352") {
+    if (command.owner && message.author.id !== `${client.owner}`) {
         embed.setDescription("Only <@527452562857656352> can use this command!");
         return message.channel.send(embed);
     }

@@ -3,7 +3,7 @@
  */
 const { Client, Collection, Intents, MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
-const { TOKEN, PREFIX, EMOJI } = require("./config.json");
+const { TOKEN, PREFIX, OWNERID } = require("./config.json");
 const DisTube = require('distube');
 
 const client = new Client({
@@ -15,6 +15,7 @@ const client = new Client({
 const distube = new DisTube(client, { searchSongs: false, emitNewSongOnly: true, leaveOnStop: false, leaveOnEmpty: true });
 
 client.prefix = PREFIX;
+client.owner = OWNERID;
 client.commands = new Collection();
 client.categories = readdirSync("./commands/");
 client.distube = distube;
