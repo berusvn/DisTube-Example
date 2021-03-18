@@ -3,7 +3,7 @@
  */
 const { Client, Collection, Intents, MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
-const { TOKEN, PREFIX, OWNERID, EMBEDCOLOR, EMBEDFOOTER } = require("./config.json");
+const { TOKEN, PREFIX, OWNERID, EMBEDCOLOR } = require("./config.json");
 const DisTube = require('distube');
 
 const client = new Client({
@@ -20,7 +20,6 @@ client.commands = new Collection();
 client.categories = readdirSync("./commands/");
 client.distube = distube;
 client.color = EMBEDCOLOR;
-client.footer = EMBEDFOOTER;
 
 
 /**
