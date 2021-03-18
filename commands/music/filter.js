@@ -1,10 +1,10 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    name: "resume",
+    name: "filter",
     category: "music",
-    aliases: [],
-    description: "Resume Music",
+    aliases: [ "eq", "equalizer" ],
+    description: "Audio Filters",
     args: true,
     usage: "<`3d`, `bassboost`, `echo`, `karaoke`, `nightcore`, `vaporwave`>",
     permission: [],

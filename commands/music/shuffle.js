@@ -1,10 +1,10 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    name: "stop",
+    name: "shuffle",
     category: "music",
     aliases: [],
-    description: "Stop Music",
+    description: "Shuffle Music",
     args: false,
     usage: "",
     permission: [],
