@@ -4,11 +4,13 @@ const { post } = require("node-superfetch");
 module.exports = {
     name: "eval",
     category: "owner",
+    aliases: [],
     description: "Eval Code",
+    args: true,
+    usage: "<Code>",
+    permission: [],
+    owner: true,
     async execute(message, args) {
-        // This command is super frickin' dangerous. Make it only visible and usable for you only, or give it to someone you trust.
-        if (message.author.id !== '527452562857656352') return;
-
         const embed = new MessageEmbed()
             .addField("Input", "```js\n" + args.join(" ") + "```");
 
