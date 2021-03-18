@@ -1,6 +1,7 @@
 # Discord Music Bot
 
-This is a simple [DisTube](https://distube.js.org/) example music bot./n
+This is a simple [DisTube](https://distube.js.org/) example music bot.
+
 Please edit the `config.json` file first. (Add Token Bot, Prefix, and Owner Bot ID)
 
 ## Requirement
