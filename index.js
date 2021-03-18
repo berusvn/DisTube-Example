@@ -3,7 +3,7 @@
  */
 const { Client, Collection, Intents, MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
-const { TOKEN, PREFIX, OWNERID } = require("./config.json");
+const { TOKEN, PREFIX, OWNERID, EMBEDCOLOR, EMBEDFOOTER } = require("./config.json");
 const DisTube = require('distube');
 
 const client = new Client({
@@ -19,6 +19,9 @@ client.owner = OWNERID;
 client.commands = new Collection();
 client.categories = readdirSync("./commands/");
 client.distube = distube;
+client.color = EMBEDCOLOR;
+client.footer = EMBEDFOOTER;
+
 
 /**
  * Client Events
@@ -59,7 +62,7 @@ const status = queue => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter
 client.distube
     .on("playSong", (message, queue, song) => {
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`Started Playing **${song.name}** - \`[${song.formattedDuration}]\``)
             .setThumbnail(song.thumbnail)
@@ -68,7 +71,7 @@ client.distube
     })
     .on("addSong", (message, queue, song) => {
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`Added **${song.name}** - \`[${song.formattedDuration}]\` to the queue`)
             .setThumbnail(song.thumbnail)
@@ -77,7 +80,7 @@ client.distube
     })
     .on("playList", (message, queue, playlist, song) => {
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`Play **${playlist.title}** playlist (${playlist.total_items} songs)\nNow playing **${song.name}** - \`[${song.formattedDuration}]\``)
             .setThumbnail(playlist.thumbnail)
@@ -86,7 +89,7 @@ client.distube
     })
     .on("addList", (message, queue, playlist) => {
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`Added **${playlist.title}** playlist (${playlist.total_items} songs) to the queue`)
             .setThumbnail(playlist.thumbnail)
@@ -97,7 +100,7 @@ client.distube
     .on("searchResult", (message, result) => {
         let i = 0
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}`)
             .setFooter(`Enter anything else or wait 60 seconds to cancel`);

@@ -16,7 +16,7 @@ module.exports = {
             message.member.voice.channel.join();
 
             let thing = new MessageEmbed()
-                .setColor("#FF1493")
+                .setColor(message.client.color)
                 .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
                 .setDescription("**Join** the voice channel.")
                 .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL());

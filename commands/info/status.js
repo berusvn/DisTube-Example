@@ -17,7 +17,7 @@ module.exports = {
         const duration1 = moment.duration(message.client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
         const cpu = await si.cpu();
         const embed = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setThumbnail(message.client.user.displayAvatarURL())
             .setFooter(`Request by: ${message.author.tag}`)
             .setDescription(`**Status**

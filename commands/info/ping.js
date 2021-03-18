@@ -11,7 +11,7 @@ module.exports = {
     owner: false,
     execute(message, args) {
         const embed = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setDescription(`Ping : **${message.client.ws.ping}**ms`)
             .setFooter(`Request by: ${message.author.tag}`);
         message.channel.send(embed);

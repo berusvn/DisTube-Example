@@ -13,7 +13,7 @@ module.exports = {
         let embed = new MessageEmbed()
             .setTitle("Click Here")
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setURL("https://discord.com/api/oauth2/authorize?client_id=" + message.client.user.id + "&permissions=8&scope=bot")
             .addField('Or Clik Link Below', "https://discord.com/api/oauth2/authorize?client_id=" + message.client.user.id + "&permissions=8&scope=bot")
             .setFooter(`Request by: ${message.author.tag}`);

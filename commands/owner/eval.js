@@ -30,10 +30,10 @@ module.exports = {
             if (output.length > 1024) {
                 // If the output was more than 1024 characters, we're gonna export them into the hastebin.
                 const { body } = await post("https://hastebin.com/documents").send(output);
-                embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor("#FF1493");
+                embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor(message.client.color);
                 // Sometimes, the body.key will turn into undefined. It might be the API is under maintenance or broken.
             } else {
-                embed.addField("Output", "```js\n" + output + "```").setColor("#FF1493")
+                embed.addField("Output", "```js\n" + output + "```").setColor(message.client.color)
             }
 
             message.channel.send(embed);

@@ -1,5 +1,7 @@
 {
     "TOKEN": "",
     "PREFIX": "",
-    "OWNERID": ""
+    "OWNERID": "",
+    "EMBEDCOLOR": "BLACK",
+    "EMBEDFOOTER": ""
 }

@@ -27,7 +27,7 @@ module.exports = {
         if (queue.pause) {
             message.client.distube.resume(message)
             let thing = new MessageEmbed()
-                .setColor("#FF1493")
+                .setColor(message.client.color)
                 .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
                 .setDescription(`**Resumed** the song!`)
                 .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
@@ -37,7 +37,7 @@ module.exports = {
         message.client.distube.pause(message)
         
         let thing = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`**Paused** the song!`)
             .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());

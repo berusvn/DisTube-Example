@@ -12,7 +12,7 @@ module.exports = {
     owner: false,
     async execute(message, args) {
         const embed = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setThumbnail(message.client.user.displayAvatarURL())
             .setFooter(`Request by: ${message.author.tag}`)

@@ -36,7 +36,7 @@ module.exports = {
         }
 
         let lyricsEmbed = new MessageEmbed()
-            .setColor("#FF1493")
+            .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`**Lyrics** of **${song}**\n${lyrics}`)
             .setFooter(`Request by: ${message.author.tag}`);
