@@ -59,12 +59,12 @@ process.on('uncaughtException', error => console.log(error));
  */
 const status = queue => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode === 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``
 client.distube
-    .on("playSong", (message, queue, song) => {
+    .on("addList", (message, queue, playlist) => {
         let thing = new MessageEmbed()
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription(`Started Playing **${song.name}** - \`[${song.formattedDuration}]\``)
-            .setThumbnail(song.thumbnail)
+            .setDescription(`Added **${playlist.title}** playlist (${playlist.total_items} songs) to the queue`)
+            .setThumbnail(playlist.thumbnail)
             .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
         message.channel.send(thing);
     })
@@ -77,6 +77,33 @@ client.distube
             .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
         message.channel.send(thing);
     })
+    .on("empty", message => {
+        let thing = new MessageEmbed()
+            .setColor("RED")
+            .setDescription(`Channel is empty. Leaving the channel`)
+        message.channel.send(thing);
+    })
+    .on("error", (message, err) => {
+        let thing = new MessageEmbed()
+            .setColor("RED")
+            .setDescription(`An error encountered: ${err}`)
+        message.channel.send(thing);
+    })
+    .on("finish", message => {
+        let thing = new MessageEmbed()
+            .setColor("RED")
+            .setDescription(`No more song in queue`)
+        message.channel.send(thing);
+    })
+    .on("initQueue", queue => {
+        queue.autoplay = false;
+    })
+    .on("noRelated", message => {
+        let thing = new MessageEmbed()
+            .setColor("RED")
+            .setDescription(`Can't find related video to play. Stop playing music.`)
+        message.channel.send(thing);
+    })
     .on("playList", (message, queue, playlist, song) => {
         let thing = new MessageEmbed()
             .setColor(message.client.color)
@@ -86,13 +113,20 @@ client.distube
             .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
         message.channel.send(thing);
     })
-    .on("addList", (message, queue, playlist) => {
+    .on("playSong", (message, queue, song) => {
         let thing = new MessageEmbed()
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription(`Added **${playlist.title}** playlist (${playlist.total_items} songs) to the queue`)
-            .setThumbnail(playlist.thumbnail)
+            .setDescription(`Started Playing **${song.name}** - \`[${song.formattedDuration}]\``)
+            .setThumbnail(song.thumbnail)
             .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
+        message.channel.send(thing);
+    })
+    // DisTubeOptions.searchSongs = true
+    .on("searchCancel", message => {
+        let thing = new MessageEmbed()
+            .setColor("RED")
+            .setDescription(`Searching canceled!`)
         message.channel.send(thing);
     })
     // DisTubeOptions.searchSongs = true
@@ -104,34 +138,6 @@ client.distube
             .setDescription(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}`)
             .setFooter(`Enter anything else or wait 60 seconds to cancel`);
         message.channel.send(thing);
-    })
-    // DisTubeOptions.searchSongs = true
-    .on("searchCancel", message => {
-        let thing = new MessageEmbed()
-            .setColor("RED")
-            .setDescription(`Searching canceled!`)
-        message.channel.send(thing);
-    })
-    .on("error", (message, err) => {
-        let thing = new MessageEmbed()
-            .setColor("RED")
-            .setDescription(`An error encountered: ${err}`)
-        message.channel.send(thing);
-    })
-    .on("empty", message => {
-        let thing = new MessageEmbed()
-            .setColor("RED")
-            .setDescription(`Channel is empty. Leaving the channel`)
-        message.channel.send(thing);
-    })
-    .on("noRelated", message => {
-        let thing = new MessageEmbed()
-            .setColor("RED")
-            .setDescription(`Can't find related video to play. Stop playing music.`)
-        message.channel.send(thing);
-    })
-    .on("initQueue", queue => {
-        queue.autoplay = false;
     });
 
 client.login(TOKEN);
