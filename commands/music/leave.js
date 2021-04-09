@@ -17,9 +17,9 @@ module.exports = {
         if(!queue) {
             message.member.voice.channel.leave();
         } else {
-			message.client.distube.stop(message);
-			message.member.voice.channel.leave();
-		}
+	    message.client.distube.stop(message);
+	    message.member.voice.channel.leave();
+	}
 
         let thing = new MessageEmbed()
             .setColor(message.client.color)
