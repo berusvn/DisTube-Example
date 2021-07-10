@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { status } = require("../../utils/distube.js");
 
 module.exports = {
     name: "loop",
@@ -24,14 +25,11 @@ module.exports = {
         let mode = message.client.distube.setRepeatMode(message, parseInt(args[0]));
         mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
 
-        // Queue status template
-        const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
-
         let thing = new MessageEmbed()
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription("Set repeat mode to **" + mode + "**")
-            .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
+            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
         message.channel.send(thing);
     }
 }

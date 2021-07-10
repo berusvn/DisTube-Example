@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { status } = require("../../utils/distube.js");
 
 module.exports = {
     name: "queue",
@@ -20,9 +21,6 @@ module.exports = {
                 .setDescription(`❌ There is no music playing.`);
             return message.channel.send(thing);
         }
-
-        // Queue status template
-        const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 
         function paginate(arr, size) {
             return arr.reduce((acc, val, i) => {
@@ -50,7 +48,7 @@ module.exports = {
             let embed = new MessageEmbed()
                 .setColor("BLACK")
                 .setTimestamp()
-                .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL())
+                .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL())
                 .setDescription(`🎶 Queue:\n` + pages[page].join('\n') + `\n\nPage ${page + 1} of ${pages.length}`);
             return embed;
         };

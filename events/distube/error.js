@@ -1,4 +1,4 @@
-const { status } = require("../../utils/distube.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = async (client, message, err) => {
 

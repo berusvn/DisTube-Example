@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { status } = require("../../utils/distube.js");
 
 module.exports = {
     name: "pause",
@@ -21,16 +22,13 @@ module.exports = {
             return message.channel.send(thing);
         }
 
-        // Queue status templat
-        const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
-
         if (queue.pause) {
             message.client.distube.resume(message)
             let thing = new MessageEmbed()
                 .setColor(message.client.color)
                 .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
                 .setDescription(`**Resumed** the song!`)
-                .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
+                .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
             return message.channel.send(thing);
         }
 
@@ -40,7 +38,7 @@ module.exports = {
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`**Paused** the song!`)
-            .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
+            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
         message.channel.send(thing);
     }
 }

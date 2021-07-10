@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { status } = require("../../utils/distube.js");
 
 module.exports = {
     name: "autoplay",
@@ -30,7 +31,7 @@ module.exports = {
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription("Set autoplay mode to **" + (mode ? "On" : "Off") + "**")
-            .setFooter(`Request by: ${message.author.tag} ~ ${status(queue)}`, message.author.displayAvatarURL());
+            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
         message.channel.send(thing);
     }
 }

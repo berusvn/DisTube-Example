@@ -1,4 +1,4 @@
-const { status } = require("../../utils/distube.js");
+const { MessageEmbed } = require("discord.js");
 
 // If DisTubeOptions.searchSongs = true
 module.exports = async (client, message) => {
