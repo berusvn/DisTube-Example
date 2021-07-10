@@ -7,7 +7,7 @@ module.exports = async (client, message, queue, playlist) => {
         .setColor(message.client.color)
         .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
         .setDescription(`🎶Added Playlist \n[${playlist.name}](${playlist.url}) \nTotal : (${playlist.songs.length} songs`)
-        .setThumbnail(playlist.thumbnail)
+        .setThumbnail(playlist.thumbnail.url)
         .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
     message.channel.send(thing);
 
