@@ -23,7 +23,7 @@ module.exports = async (client, message) => {
 
     // args: true,
     if (command.args && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+        let reply = `❌ You didn't provide any arguments, ${message.author}!`;
         
         // usage: '',
         if (command.usage) {
@@ -35,22 +35,22 @@ module.exports = async (client, message) => {
     }
 
     if (command.permission && !message.member.permissions.has(command.permission)) {
-        embed.setDescription("You can't use this command!");
+        embed.setDescription("❌ You can't use this command!");
         return message.channel.send(embed);
     }
 
     if (command.owner && message.author.id !== `${client.owner}`) {
-        embed.setDescription("Only <@527452562857656352> can use this command!");
+        embed.setDescription(`❌ Only <@${client.owner}> can use this command!`);
         return message.channel.send(embed);
     }
 
     if (command.inVoiceChannel && !message.member.voice.channel) {
-        embed.setDescription("You must be in a voice channel!");
+        embed.setDescription("❌ You must be in a voice channel!");
         return message.channel.send(embed);
     }
 
     if (command.sameVoiceChannel && message.member.voice.channel !== message.guild.me.voice.channel) {
-        embed.setDescription(`You must be in the same channel as ${message.client.user}!`);
+        embed.setDescription(`❌ You must be in the same channel as ${message.client.user}!`);
         return message.channel.send(embed);
     }
 
@@ -58,7 +58,7 @@ module.exports = async (client, message) => {
         command.execute(message, args);
     } catch (error) {
         console.log(error);
-        embed.setDescription("There was an error executing that command.\nI have contacted the owner of the bot to fix it immediately.");
+        embed.setDescription("❌ There was an error executing that command.\nI have contacted the owner of the bot to fix it immediately.");
         return message.channel.send(embed);
     }
 };

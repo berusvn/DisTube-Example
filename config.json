@@ -2,5 +2,7 @@
     "TOKEN": "",
     "PREFIX": "",
     "OWNERID": "",
-    "EMBEDCOLOR": "BLACK"
+    "EMBEDCOLOR": "#000",
+    "youtubeCookie": "",
+    "youtubeIdentityToken": ""
 }

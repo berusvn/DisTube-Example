@@ -12,23 +12,25 @@ module.exports = {
     inVoiceChannel: true,
     sameVoiceChannel: false,
     execute(message, args) {
+
         if (!message.guild.me.voice.channel) {
             message.member.voice.channel.join();
-        } else {
-            if (message.guild.me.voice.channel !== message.member.voice.channel) {
-                let thing = new MessageEmbed()
-                    .setColor("RED")
-                    .setDescription(`You must be in the same channel as ${message.client.user}`);
-                return message.channel.send(thing)
-            }
         }
-        
+
+        if (message.guild.me.voice.channel !== message.member.voice.channel) {
+            let thing = new MessageEmbed()
+                .setColor("RED")
+                .setDescription(`❌ You must be in the same channel as ${message.client.user}`);
+            return message.channel.send(thing)
+        }
+
         try {
             message.client.distube.play(message, args.join(' '))
         } catch (e) {
+            console.log(e);
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`Error: \`${e}\``);
+                .setDescription(`❌ Error: \n${e}`);
             return message.channel.send(thing);
         }
     }

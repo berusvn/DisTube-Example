@@ -18,7 +18,7 @@ module.exports = {
         if(!queue) {
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`There is no music playing.`);
+                .setDescription(`❌ There is no music playing.`);
             return message.channel.send(thing);
         }
 
@@ -29,7 +29,7 @@ module.exports = {
 
         try {
             lyrics = await lyricsFinder(song, "");
-            if (!lyrics) lyrics = `No lyrics found.`;
+            if (!lyrics) lyrics = `❌ No lyrics found.`;
         } catch (error) {
             console.error(error)
             lyrics = `Usage: ${message.client.prefix}ly <Song Name>`;
