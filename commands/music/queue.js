@@ -11,7 +11,7 @@ module.exports = {
     owner: false,
     inVoiceChannel: false,
     sameVoiceChannel: false,
-    execute(message, args) {
+    async execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
         if(!queue) {
