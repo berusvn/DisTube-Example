@@ -30,7 +30,7 @@ module.exports = {
             console.log(e);
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`❌ Error: \n${e}`);
+                .setDescription(`❌ ${e}`);
             return message.channel.send(thing);
         }
     }
