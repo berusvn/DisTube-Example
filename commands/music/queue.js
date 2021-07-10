@@ -31,7 +31,7 @@ module.exports = {
             }, [])
         }
 
-        let array = queue.songs.map((song, id) => `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\``);
+        let array = queue.songs.map((song, id) => `**${id + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``);
         let page_size = 10;
         let pages = paginate(array, page_size);
         let current = 0;

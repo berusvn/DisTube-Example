@@ -15,7 +15,7 @@ module.exports = {
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setThumbnail(message.client.user.displayAvatarURL())
-            .setFooter(`Request by: ${message.author.tag}`)
+            .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL())
             .setTitle(`List All Command`);
 
         const commands = (category) => {

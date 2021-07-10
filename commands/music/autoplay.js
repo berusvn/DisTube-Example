@@ -24,9 +24,6 @@ module.exports = {
 
         let mode = message.client.distube.toggleAutoplay(message);
 
-        // Queue status template
-        const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
-
         let thing = new MessageEmbed()
             .setColor(message.client.color)
             .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())

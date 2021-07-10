@@ -19,7 +19,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setColor(message.client.color)
             .setThumbnail(message.client.user.displayAvatarURL())
-            .setFooter(`Request by: ${message.author.tag}`)
+            .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL())
             .setDescription(`**Status**
 **= STATISTICS =**
 **• Servers** : ${message.client.guilds.cache.size.toLocaleString()}
