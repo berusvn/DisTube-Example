@@ -1,13 +1,13 @@
 {
   "name": "botmusic",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "author": "1mgr007",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
     "ascii-table": "^0.0.9",
