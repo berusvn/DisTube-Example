@@ -15,13 +15,13 @@ module.exports = {
 
         if (!message.guild.me.voice.channel) {
             message.member.voice.channel.join();
-        }
-
-        if (message.guild.me.voice.channel !== message.member.voice.channel) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ You must be in the same channel as ${message.client.user}`);
-            return message.channel.send(thing)
+        } else {
+            if (message.guild.me.voice.channel !== message.member.voice.channel) {
+                let thing = new MessageEmbed()
+                    .setColor("RED")
+                    .setDescription(`❌ You must be in the same channel as ${message.client.user}`);
+                return message.channel.send(thing)
+            }
         }
 
         try {
