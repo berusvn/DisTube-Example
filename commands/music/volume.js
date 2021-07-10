@@ -38,20 +38,11 @@ module.exports = {
         
         message.client.distube.setVolume(message, volume);
 
-        if (volume < volumenow) {
-            let thing = new MessageEmbed()
-                .setColor(message.client.color)
-                .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-                .setDescription(`🔉 **Volume** set to \`${volume}\``)
-                .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-            message.channel.send(thing);
-        } else if (volume > volumenow) {
-            let thing = new MessageEmbed()
-                .setColor(message.client.color)
-                .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-                .setDescription(`🔊 **Volume** set to \`${volume}\``)
-                .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-            message.channel.send(thing);
-        }
+        let thing = new MessageEmbed()
+            .setColor(message.client.color)
+            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
+            .setDescription(`🔊 **Volume** set to \`${volume}\``)
+            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
+        message.channel.send(thing);
     }
 }
