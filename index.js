@@ -26,6 +26,7 @@ client.prefix = PREFIX;
 client.owner = OWNERID;
 client.commands = new Collection();
 client.categories = readdirSync("./commands/");
+client.logger = require("./utils/logger.js");
 client.distube = distube;
 client.color = EMBEDCOLOR;
 
