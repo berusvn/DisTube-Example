@@ -27,7 +27,7 @@ module.exports = {
         const currentSong = message.client.distube.getQueue(message).songs[0];
 
         // Progress Bar
-        var total = currentSong.duration;
+        var total = currentSong.duration * 1000;
         var current = queue.currentTime;
         var size = 30;
         var line = '─';
@@ -35,7 +35,7 @@ module.exports = {
 
         let thing = new MessageEmbed()
             .setDescription(`🎵 **Now Playing**\n[${currentSong.name}](${currentSong.url}) - \`[${currentSong.formattedDuration}]\``)
-            .setThumbnail(song.thumbnail)
+            .setThumbnail(currentSong.thumbnail)
             .setColor(message.client.color)
             .addField("\u200b", progressbar(total, current, size, line, slider))
             .addField("\u200b", `\`${convertTime(current)} / ${convertTime(total)}\``)

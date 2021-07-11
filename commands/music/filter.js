@@ -18,7 +18,7 @@ module.exports = {
         if(!queue) {
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`There is no music playing.`);
+                .setDescription(`❌ There is no music playing.`);
             return message.channel.send(thing);
         }
 

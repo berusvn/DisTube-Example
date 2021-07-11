@@ -47,7 +47,6 @@ module.exports = {
         function createEmbed (page) {
             let embed = new MessageEmbed()
                 .setColor("BLACK")
-                .setTimestamp()
                 .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL())
                 .setDescription(`🎶 Queue:\n` + pages[page].join('\n') + `\n\nPage ${page + 1} of ${pages.length}`);
             return embed;
