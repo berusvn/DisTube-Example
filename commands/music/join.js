@@ -25,12 +25,12 @@ module.exports = {
                 .setDescription(`**Join** the voice channel.`)
                 .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL());
             return message.channel.send(thing);
-        } else if (clientVoice !== memberVoice) {
+        } else if (clientVoice && clientVoice !== memberVoice) {
             let thing = new MessageEmbed()
                 .setColor("RED")
                 .setDescription(`❌ You must be in the same channel as ${message.client.user}`);
             return message.channel.send(thing)
-        } else if (clientVoice === memberVoice) {
+        } else if (clientVoice && clientVoice === memberVoice) {
             let thing = new MessageEmbed()
                 .setColor("RED")
                 .setDescription(`❌ I'm already on your voice channel`);
