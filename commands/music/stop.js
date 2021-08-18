@@ -12,23 +12,20 @@ module.exports = {
     owner: false,
     inVoiceChannel: true,
     sameVoiceChannel: true,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
-
-        if(!queue) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
-        }
 
         message.client.distube.stop(message);
 
         let thing = new MessageEmbed()
             .setColor(message.client.color)
-            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription(`**Stopped** the music.`)
-            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-        message.channel.send(thing);
+            .setDescription(`${message.client.emoji.stop} **Stopped** the music.`)
+            .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+        message.channel.send({ embeds: [thing] });
+
     }
 }

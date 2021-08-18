@@ -1,16 +1,14 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    name: "play",
+    name: "search",
     category: "music",
-    aliases: [ "p" ],
-    description: "Play Music",
+    aliases: [ ],
+    description: "Search Music",
     args: true,
-    usage: "<YouTube URL | Video Name | Spotify URL>",
+    usage: "<Video Name>",
     permission: [],
     owner: false,
-    inVoiceChannel: true,
-    sameVoiceChannel: false,
     memberVC: true,
     clientVC: false,
     sameVC: false,
@@ -22,7 +20,11 @@ module.exports = {
 
         if (clientVoice) {
             if (clientVoice === memberVoice) {
-                message.client.distube.play(message, args.join(' '));
+                message.client.distube.search(args.join(' '), {
+                    limit: 10,
+                    type: "video",
+                    safeSearch: false,
+                });
             } else {
                 let thing = new MessageEmbed()
                     .setColor("RED")
@@ -30,7 +32,11 @@ module.exports = {
                 message.channel.send({ embeds: [thing] });
             }
         } else {
-            message.client.distube.play(message, args.join(' '));
+            message.client.distube.search(args.join(' '), {
+                limit: 10,
+                type: "video",
+                safeSearch: false,
+            });
         }
 
     }

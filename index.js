@@ -3,23 +3,39 @@
  */
 const { Client, Collection, Intents } = require("discord.js");
 const { readdirSync } = require("fs");
-const { TOKEN, PREFIX, OWNERID, EMBEDCOLOR, youtubeCookie, youtubeIdentityToken } = require("./config.json");
+const { TOKEN, PREFIX, OWNERID, EMBEDCOLOR, youtubeCookie, youtubeIdentityToken, clientId, clientSecret, BENNY, musicimg } = require("./config.json");
 const DisTube = require('distube');
+const { SpotifyPlugin } = require("@distube/spotify");
 
 const client = new Client({
-    disableMentions: "everyone",
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-    ws: { intents: Intents.ALL }
+    allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
+    intents: 32767
 });
 
-const distube = new DisTube(client, { 
-    searchSongs: false, 
-    emitNewSongOnly: false, 
-    leaveOnStop: false, 
-    leaveOnEmpty: false,
-    leaveOnFinish: false,
+const distube = new DisTube.DisTube(client, {
+	searchSongs: 0,
+	searchCooldown: 30,
+	leaveOnEmpty: true,
+	emptyCooldown: 0,
+	leaveOnFinish: false,
+	leaveOnStop: false,
+	plugins: [new SpotifyPlugin({ 
+        parallel: true, 
+        emitEventsAfterFetching: false,
+        api: { 
+            clientId: clientId, 
+            clientSecret: clientSecret, 
+        }
+    })],
     youtubeCookie: youtubeCookie,
-    youtubeIdentityToken: youtubeIdentityToken
+    youtubeIdentityToken: youtubeIdentityToken,
+    ytdlOptions: {
+        highWaterMark: 1 << 24,
+        quality: 'highestaudio'
+    },
+    emitAddListWhenCreatingQueue: true,
+    emitAddSongWhenCreatingQueue: false
 });
 
 client.prefix = PREFIX;
@@ -29,10 +45,10 @@ client.categories = readdirSync("./commands/");
 client.logger = require("./utils/logger.js");
 client.distube = distube;
 client.color = EMBEDCOLOR;
+client.emoji = require("./utils/emoji.json");
+client.musicimg = musicimg;
 
-/**
- * Client Events
- */
+// Client Events
 readdirSync("./events/client/").forEach(file => {
     const event = require(`./events/client/${file}`);
     let eventName = file.split(".")[0];
@@ -40,35 +56,27 @@ readdirSync("./events/client/").forEach(file => {
     client.on(eventName, event.bind(null, client));
 });
 
-/**
- * Distube Events
- */
+// Distube Events
 readdirSync("./events/distube/").forEach(file => {
     const event = require(`./events/distube/${file}`);
     let eventName = file.split(".")[0];
-    client.logger.log(`Loading Events Lavalink ${eventName}`, "event");
+    client.logger.log(`Loading Events Distube ${eventName}`, "event");
     client.distube.on(eventName, event.bind(null, client));
 });
 
-/**
- * Import all commands
- */
+// Import all commands
 readdirSync("./commands/").forEach(dir => {
     const commandFiles = readdirSync(`./commands/${dir}/`).filter(f => f.endsWith('.js'));
     for (const file of commandFiles) {
         const command = require(`./commands/${dir}/${file}`);
-        console.log(`Loading ${command.category} commands ${command.name}`);
+        client.logger.log(`Loading ${command.category} commands ${command.name}`, "cmd");
         client.commands.set(command.name, command);
     }
 });
 
-/**
- * Error Handler
- */
-client.on("disconnect", () => console.log("Bot is disconnecting..."))
-client.on("reconnecting", () => console.log("Bot reconnecting..."))
-client.on('warn', error => console.log(error));
+// Error Handler
 client.on('error', error => console.log(error));
+client.on('warn', info => console.log(info));
 process.on('unhandledRejection', error => console.log(error));
 process.on('uncaughtException', error => console.log(error));
 

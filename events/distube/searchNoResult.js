@@ -1,11 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const { status } = require("../../utils/distube.js");
 
-// If DisTubeOptions.searchSongs = true
 module.exports = async (client, message, query) => {
 
     let thing = new MessageEmbed()
         .setColor("RED")
-        .setDescription(`${client.emoji.warn} Searching canceled!`)
+        .setDescription(`${client.emoji.warn} No result found for ${query}!`)
     message.channel.send({ embeds: [thing] });
 
 }

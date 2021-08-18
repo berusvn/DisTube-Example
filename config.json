@@ -4,5 +4,8 @@
     "OWNERID": "",
     "EMBEDCOLOR": "#000",
     "youtubeCookie": "",
-    "youtubeIdentityToken": ""
+    "youtubeIdentityToken": "",
+    "clientId": "",
+    "clientSecret": "",
+    "musicimg": ""
 }

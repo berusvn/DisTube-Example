@@ -1,11 +1,10 @@
 const { MessageEmbed } = require("discord.js");
-const { status } = require("../../utils/distube.js");
 
 module.exports = {
-    name: "shuffle",
+    name: "previous",
     category: "music",
-    aliases: [],
-    description: "Shuffle Music",
+    aliases: [ ],
+    description: "previous Music",
     args: false,
     usage: "",
     permission: [],
@@ -17,15 +16,14 @@ module.exports = {
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        message.client.distube.shuffle(message)
-            .then(queue => {
+        message.client.distube.previous(message)
+            .then(song => {
                 let thing = new MessageEmbed()
                     .setColor(message.client.color)
-                    .setDescription(`${message.client.emoji.shuffle} **Shuffle** queue.`)
+                    .setDescription(`${message.client.emoji.previous} Play **previous** song.`)
                     .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
                 message.channel.send({ embeds: [thing] });
-            })
+            });
 
-        
     }
 }

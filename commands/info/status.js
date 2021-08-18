@@ -20,13 +20,14 @@ module.exports = {
             .setColor(message.client.color)
             .setThumbnail(message.client.user.displayAvatarURL())
             .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL())
-            .setDescription(`**Status**
+            .setDescription(`${message.client.emoji.info} **Status**
 **= STATISTICS =**
 **• Servers** : ${message.client.guilds.cache.size.toLocaleString()}
 **• Channels** : ${message.client.channels.cache.size.toLocaleString()}
 **• Users** : ${message.client.users.cache.size.toLocaleString()}
 **• Discord.js** : v${version}
 **• Node** : ${process.version}
+**• Distube** : v${message.client.distube.version}
 
 **= SYSTEM =**
 **• Platfrom** : ${os.type}
@@ -41,6 +42,6 @@ module.exports = {
 > **• Heap Total** : ${(process.memoryUsage().heapTotal / 1024 / 1024).toFixed(2)} Mbps
 > **• Heap Usage** : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} Mbps
 `);
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }

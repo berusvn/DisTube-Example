@@ -1,11 +1,11 @@
 const { MessageEmbed } = require("discord.js");
 
-module.exports = async (client, message) => {
+module.exports = async (client, queue) => {
 
     // If DisTubeOptions.leaveOnEmpty is true
     let thing = new MessageEmbed()
         .setColor("RED")
-        .setDescription(`❌Channel is empty. \nLeaving the channel`)
-    message.channel.send(thing);
+        .setDescription(`${client.emoji.warn} Channel is empty.`);
+    queue.textChannel.send({ embeds: [thing] });
 
 }

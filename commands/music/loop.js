@@ -10,26 +10,55 @@ module.exports = {
     usage: "",
     permission: [],
     owner: false,
-    inVoiceChannel: true,
-    sameVoiceChannel: true,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        if(!queue) {
+        let repeatMode;
+
+        if (!args[0]) repeatMode = 1;
+        if (args[0] && args[0] === "lagu") repeatMode = 1;
+        if (args[0] && args[0] === "song") repeatMode = 1;
+        if (args[0] && args[0] === "queue") repeatMode = 2;
+        if (args[0] && args[0] === "all") repeatMode = 2;
+
+        if (queue.repeatMode === 0) {
+            if (repeatMode === 0) {
+                message.client.distube.setRepeatMode(message, 1);
+    
+                let thing = new MessageEmbed()
+                    .setColor(message.client.color)
+                    .setDescription(`${message.client.emoji.loop} **Looping** a song.`)
+                    .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+                message.channel.send({ embeds: [thing] });
+            } else if (repeatMode === 1) {
+                message.client.distube.setRepeatMode(message, 1);
+    
+                let thing = new MessageEmbed()
+                    .setColor(message.client.color)
+                    .setDescription(`${message.client.emoji.loop} **Looping** a song.`)
+                    .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+                message.channel.send({ embeds: [thing] });
+            } else if (repeatMode === 2) {
+                message.client.distube.setRepeatMode(message, 2);
+    
+                let thing = new MessageEmbed()
+                    .setColor(message.client.color)
+                    .setDescription(`${message.client.emoji.loop} **Looping** all the queue.`)
+                    .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+                message.channel.send({ embeds: [thing] });
+            }
+        } else {
+            message.client.distube.setRepeatMode(message, 0);
+    
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
+                .setColor(message.client.color)
+                .setDescription(`${message.client.emoji.loop} Stop **looping** song.`)
+                .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+            message.channel.send({ embeds: [thing] });
         }
-
-        let mode = message.client.distube.setRepeatMode(message, parseInt(args[0]));
-        mode = mode ? mode == 2 ? "Repeat queue" : "Repeat song" : "Off";
-
-        let thing = new MessageEmbed()
-            .setColor(message.client.color)
-            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription("Set repeat mode to **" + mode + "**")
-            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-        message.channel.send(thing);
     }
 }

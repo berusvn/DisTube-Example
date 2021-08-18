@@ -16,7 +16,7 @@ module.exports = {
 
         try {
             const code = args.join(" ");
-            if (!code) return message.channel.send("Please include the code.");
+            if (!code) return message.channel.send(`${message.client.emoji.warn} Please include the code.`);
             let evaled;
 
             // This method is to prevent someone that you trust, open the secret shit here.
@@ -38,7 +38,7 @@ module.exports = {
                 embed.addField("Output", "```js\n" + output + "```").setColor(message.client.color)
             }
 
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
 
         } catch (error) {
             let err = clean(error);
@@ -50,7 +50,7 @@ module.exports = {
                 embed.addField("Output", "```js\n" + err + "```").setColor("RED");
             }
 
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         }
     }
 }

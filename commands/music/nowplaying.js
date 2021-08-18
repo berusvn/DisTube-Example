@@ -12,35 +12,30 @@ module.exports = {
     usage: "",
     permission: [],
     owner: false,
-    inVoiceChannel: false,
-    sameVoiceChannel: false,
+    memberVC: false,
+    clientVC: true,
+    sameVC: false,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        if(!queue) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
-        }
-
-        const currentSong = message.client.distube.getQueue(message).songs[0];
+        const currentSong = queue.songs[0];
 
         // Progress Bar
         var total = currentSong.duration * 1000;
-        var current = queue.currentTime;
+        var current = queue.currentTime * 1000;
         var size = 30;
         var line = '─';
-        var slider = '🎵';
+        var slider = message.client.emoji.note;
 
         let thing = new MessageEmbed()
-            .setDescription(`🎵 **Now Playing**\n[${currentSong.name}](${currentSong.url}) - \`[${currentSong.formattedDuration}]\``)
+            .setDescription(`${message.client.emoji.music} **Now Playing**\n[${currentSong.name}](${currentSong.url}) - \`[${currentSong.formattedDuration}]\``)
             .setThumbnail(currentSong.thumbnail)
             .setColor(message.client.color)
             .addField("\u200b", progressbar(total, current, size, line, slider))
             .addField("\u200b", `\`${convertTime(current)} / ${convertTime(total)}\``)
-            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-        message.channel.send(thing);
+            .setFooter(`Request by ${message.author.tag} • ${status(queue)}`, message.author.displayAvatarURL());
+        message.channel.send({ embeds: [thing] });
 
     }
 }

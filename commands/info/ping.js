@@ -12,8 +12,7 @@ module.exports = {
     execute(message, args) {
         const embed = new MessageEmbed()
             .setColor(message.client.color)
-            .setDescription(`Ping : **${message.client.ws.ping}**ms`)
-            .setFooter(`Request by: ${message.author.tag}`, message.author.displayAvatarURL());
-        message.channel.send(embed);
+            .setDescription(`Ping : **${message.client.ws.ping}**ms`);
+        message.channel.send({ embeds: [embed] });
     }
 }

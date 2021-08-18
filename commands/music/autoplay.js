@@ -10,25 +10,29 @@ module.exports = {
     usage: "",
     permission: [],
     owner: false,
-    inVoiceChannel: true,
-    sameVoiceChannel: true,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        if(!queue) {
+        if (!queue.autoplay) {
+            message.client.distube.toggleAutoplay(message);
+    
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
+                .setColor(message.client.color)
+                .setDescription(`${message.client.emoji.autoplay} Activate **autoplay** mode.`)
+                .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+            message.channel.send({ embeds: [thing] });
+        } else {
+            message.client.distube.toggleAutoplay(message);
+
+            let thing = new MessageEmbed()
+                .setColor(message.client.color)
+                .setDescription(`${message.client.emoji.autoplay} Disable **autoplay** mode.`)
+                .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+            message.channel.send({ embeds: [thing] });
         }
-
-        let mode = message.client.distube.toggleAutoplay(message);
-
-        let thing = new MessageEmbed()
-            .setColor(message.client.color)
-            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription("Set autoplay mode to **" + (mode ? "On" : "Off") + "**")
-            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-        message.channel.send(thing);
     }
 }

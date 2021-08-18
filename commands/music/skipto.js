@@ -9,31 +9,27 @@ module.exports = {
     usage: "",
     permission: [],
     owner: false,
-    inVoiceChannel: true,
-    sameVoiceChannel: true,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
-
-        if(!queue) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
-        }
 
         if (isNaN(args[0])) {
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`❌ Please enter a valid number!`);
-            return message.channel.send(thing);
+                .setDescription(`${message.client.emoji.warn} Please enter a valid number!`);
+            return message.channel.send({ embeds: [thing] });
         }
 
         message.client.distube.jump(message, parseInt(args[0]))
-            .catch(err => {
+            .then(queue => {
                 let thing = new MessageEmbed()
-                    .setColor("RED")
-                    .setDescription(`❌ Please enter a valid number!`);
-                return message.channel.send(thing);
+                    .setColor(message.client.color)
+                    .setDescription(`${message.client.emoji.skipto} **Skip** ${args[0]} songs.`)
+                    .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+                message.channel.send({ embeds: [thing] });
             });
     }
 }

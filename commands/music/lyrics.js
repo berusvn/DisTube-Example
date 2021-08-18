@@ -10,26 +10,22 @@ module.exports = {
     usage: "",
     permission: [],
     owner: false,
-    inVoiceChannel: false,
-    sameVoiceChannel: false,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     async execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        if(!queue) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
-        }
-
         let song = args.join(" ");
-        if (!song && queue.song[0]) song = queue.song[0].name;
+		let currentSong = queue.songs[0];
+        if (!song && currentSong) song = currentSong.name;
 
         let lyrics = null;
 
         try {
             lyrics = await lyricsFinder(song, "");
-            if (!lyrics) lyrics = `❌ No lyrics found.`;
+            if (!lyrics) lyrics = `${message.client.emoji.warn}  No lyrics found.`;
         } catch (error) {
             console.error(error)
             lyrics = `Usage: ${message.client.prefix}ly <Song Name>`;
@@ -37,12 +33,17 @@ module.exports = {
 
         let lyricsEmbed = new MessageEmbed()
             .setColor(message.client.color)
-            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
             .setDescription(`**Lyrics** of **${song}**\n${lyrics}`)
-            .setFooter(`Request by: ${message.author.tag}`);
+            .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
 
-        if (lyricsEmbed.description.length >= 2048)
-        lyricsEmbed.description = `${lyricsEmbed.description.substr(0, 2045)}...`;
-        return message.channel.send(lyricsEmbed);
+        if (lyricsEmbed.description.length >= 2048) lyricsEmbed.description = `${lyricsEmbed.description.substr(0, 2045)}...`;
+        
+		message.channel.send({ embeds: [lyricsEmbed] })
+            .then(m => {
+                var total = queue.song[0].duration * 1000;
+                var current = queue.currentTime * 1000;
+                let time = total - current;
+                setTimeout(() => { m.delete() }, time);
+            });
     }
 }

@@ -6,43 +6,44 @@ module.exports = {
     category: "music",
     aliases: [ "v" ],
     description: "Set Volume",
-    args: true,
+    args: false,
     usage: "<Number of volume between 0 - 100>",
     permission: [],
     owner: false,
-    inVoiceChannel: true,
-    sameVoiceChannel: true,
+    memberVC: true,
+    clientVC: true,
+    sameVC: true,
+    queueVC: true,
     execute(message, args) {
         const queue = message.client.distube.getQueue(message);
 
-        if(!queue) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`❌ There is no music playing.`);
-            return message.channel.send(thing);
-        }
+        let volume = parseInt(args[0]);
 
-        let volume = parseInt(args[0])
+        if (!volume) {
+            let thing = new MessageEmbed()
+                .setColor(message.client.color)
+                .setDescription(`${message.client.emoji.volume} Current **volume** : \`${queue.volume}\`%`)
+                .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+            return message.channel.send({ embeds: [thing] });
+        }
 
         if (isNaN(volume)) {
             let thing = new MessageEmbed()
                 .setColor("RED")
-                .setDescription(`❌ Please enter a valid number!`);
-            return message.channel.send(thing);
+                .setDescription(`${message.client.emoji.warn} Please enter a valid number!`);
+            return message.channel.send({ embeds: [thing] });
         }
-
-        const volumenow = queue.volume;
 
         if (volume < 0)  volume = 0;
         if (volume > 100) volume = 100;
-        
+
         message.client.distube.setVolume(message, volume);
 
         let thing = new MessageEmbed()
             .setColor(message.client.color)
-            .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-            .setDescription(`🔊 **Volume** set to \`${volume}\``)
-            .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-        message.channel.send(thing);
+            .setDescription(`${message.client.emoji.volume} **Volume** set to \`${volume}\`%`)
+            .setFooter(`Request by ${message.author.tag}`, message.author.displayAvatarURL());
+        message.channel.send({ embeds: [thing] });
+
     }
 }

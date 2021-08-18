@@ -1,14 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 const { status } = require("../../utils/distube.js");
 
-module.exports = async (client, message, queue, song) => {
+module.exports = async (client, queue, song) => {
 
     let thing = new MessageEmbed()
-        .setColor(message.client.color)
-        .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
-        .setDescription(`🎵 Add Song \n[${song.name}](${song.url}) - \`[${song.formattedDuration}]\``)
+        .setColor(client.color)
+        .setDescription(`${client.emoji.addsong} Add Song \n[${song.name}](${song.url}) - \`[${song.formattedDuration}]\``)
         .setThumbnail(song.thumbnail)
-        .setFooter(status(message.author.tag, queue), message.author.displayAvatarURL());
-    message.channel.send(thing);
+        .setFooter(`Request by ${song.user.tag}`, song.user.displayAvatarURL());
+    queue.textChannel.send({ embeds: [thing] });
 
 }
